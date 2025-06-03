@@ -7,6 +7,19 @@ from pathlib import Path
 from nonebot.params import CommandArg
 from .intopng import get_avatar_list_png,get_avatar_info_png
 from .utils import *
+from nonebot.plugin import PluginMetadata
+
+from .config import Config
+
+__plugin_meta__ = PluginMetadata(
+    name="绝区零角色数据获取",
+    description="提供面板服务",
+    usage="写在readme上了",
+    type="application",
+    homepage="https://github.com/STESmly/nonebot_plugin_zzzpanel",
+    config=Config,
+    supported_adapters={"~onebot.v11"},
+)
 
 ZZZ_als = on_command("ZZZ图鉴")
 ZZZ_uid = on_command("ZZZ绑定")

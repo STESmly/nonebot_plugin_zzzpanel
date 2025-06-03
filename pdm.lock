@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:8391cf502d91c32a114b6a73aa893471b72c13d7ea0b95898136a20db552b703"
+content_hash = "sha256:82cfe46d5552185bba26d4de7b8ecb11910361d3797778388be14affee43ea01"
 
 [[metadata.targets]]
 requires_python = ">=3.11.0"
@@ -375,6 +375,17 @@ dependencies = [
 files = [
     {file = "nonebot2-2.4.2-py3-none-any.whl", hash = "sha256:ed3e970cdb6c885fb23349b65a045c08cf3ac7f43e28564ae0c72d3671ecda74"},
     {file = "nonebot2-2.4.2.tar.gz", hash = "sha256:cf72d5920503ff373ba1d7963f3ddf573db913eb504e3b68ee347efb937db27d"},
+]
+
+[[package]]
+name = "nonestorage"
+version = "0.1.0"
+requires_python = "<4.0,>=3.9"
+summary = "Simple library that provides local storage folder detect"
+groups = ["default"]
+files = [
+    {file = "nonestorage-0.1.0-py3-none-any.whl", hash = "sha256:35811adf67c680c272bcb71fa9d6c3613cc2d1bb79f5bfc7d83c4412a79537cb"},
+    {file = "nonestorage-0.1.0.tar.gz", hash = "sha256:818232236455c79cabbb69e716f73aa1b9c21d579f1c1fcbdba273b60bac72d9"},
 ]
 
 [[package]]
