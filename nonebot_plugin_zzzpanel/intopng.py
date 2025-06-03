@@ -716,6 +716,24 @@ async def get_avatar_info_png(user_id,num):
                 font-size: 14px;
                 color: #a0d7ff;
             }}
+            .equipment-level-badge {{
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                background: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(4px);
+                border-radius: 4px;
+                padding: 2px 1px;
+                font-size: 12px;
+                font-weight: bold;
+                color: white;
+                text-shadow: 0 0 2px rgba(0,0,0,0.5);
+                z-index: 10;
+            }}
+            
+            .equipment-icon {{
+                position: relative;
+            }}
             
             .sub-properties {{
                 margin-top: 10px;
@@ -918,6 +936,7 @@ async def get_avatar_info_png(user_id,num):
                         <div class="equipment-item">
                             <div class="equipment-icon">
                                 <img src="{eq['icon']}" alt="{eq['name']}">
+                                <div class="equipment-level-badge">+{eq['level']}</div>
                             </div>
                             <div class="equipment-name">{eq['name']}</div>
                             <div class="equipment-stats">
