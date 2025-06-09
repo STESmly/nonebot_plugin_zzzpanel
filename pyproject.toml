@@ -1,11 +1,11 @@
 [project]
 name = "nonebot_plugin_zzzpanel"
-version = "0.1.4"
+version = "0.1.5"
 description = "绝区零角色数据获取插件"
 authors = [
     {name = "STESmly", email = "3549337307@qq.com"},
 ]
-dependencies = ["httpx>=0.28.1", "nonebot2>=2.4.2", "nonebot-adapter-onebot>=2.4.6", "playwright>=1.52.0", "qrcode>=8.2", "fuzzywuzzy>=0.18.0", "pydantic>=2.11.5", "typing-extensions>=4.14.0", "appdirs>=1.4.4", "nonestorage>=0.1.0"]
+dependencies = ["httpx>=0.28.1", "nonebot2>=2.4.2", "nonebot-adapter-onebot>=2.4.6", "playwright>=1.52.0", "qrcode>=8.2", "fuzzywuzzy>=0.18.0", "typing-extensions>=4.14.0", "appdirs>=1.4.4", "nonestorage>=0.1.0", "nonebot-plugin-localstore>=0.7.4"]
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}

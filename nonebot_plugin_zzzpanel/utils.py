@@ -1,3 +1,4 @@
+import asyncio
 import json
 import re
 import httpx
@@ -9,27 +10,32 @@ from pathlib import Path
 from fuzzywuzzy import fuzz
 from .config import Config
 from nonebot import get_plugin_config
+from nonebot import require
+require("nonebot_plugin_localstore")
+import nonebot_plugin_localstore as store
 plugin_config = get_plugin_config(Config)
 
-from . import nonebot_plugin_localstore as store
 
 module_path: Path = store.get_plugin_data_dir()
 plugin_data_file: Path = store.get_plugin_data_file("filename")
 
 
 async def create_qr(data,user_id):
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(data)
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
+    def generate_and_save_qr(data, user_id, module_path):
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(data)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="white")
 
-    img_path = f"{module_path}/qrcode/{user_id}.png"
-    img.save(img_path)
+        img_path = f"{module_path}/qrcode/{user_id}.png"
+        img.save(img_path)
+
+    await asyncio.to_thread(generate_and_save_qr, data, user_id, module_path)
 
 async def get_qr(user_id):
     uuid_d = uuid.uuid4()

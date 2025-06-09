@@ -1,7 +1,9 @@
 import json
 from playwright.async_api import async_playwright
 from pathlib import Path
-from . import nonebot_plugin_localstore as store
+from nonebot import require
+require("nonebot_plugin_localstore")
+import nonebot_plugin_localstore as store
 
 module_path: Path = store.get_plugin_data_dir()
 plugin_data_file: Path = store.get_plugin_data_file("filename")

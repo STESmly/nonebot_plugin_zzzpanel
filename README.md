@@ -66,7 +66,8 @@ _✨ NoneBot 插件描述 ✨_
 ## 配置
 
 ```bash
-x_rpc_device_fp : 输入你常用设备的设备指纹
+x_rpc_device_fp = "" #输入你常用设备的设备指纹
+localstore_use_cwd = False #是否使用当前目录存储数据，c盘空间不够的话建议为true
 ```
 
 ## 效果图展示
