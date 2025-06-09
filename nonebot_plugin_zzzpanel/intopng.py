@@ -25,7 +25,8 @@ async def get_avatar_list_png(user_id):
         2: "击破",
         3: "异常",
         4: "支援",
-        5: "防护"
+        5: "防护",
+        6: "命破"
     }
 
     character_cards = [
@@ -354,6 +355,7 @@ async def get_avatar_list_png(user_id):
         )
         context = await browser.new_context(
             bypass_csp=True,
+            device_scale_factor=2
         )
         page = await context.new_page()
         await page.set_content(html_content)
@@ -386,7 +388,7 @@ async def get_avatar_info_png(user_id,num):
     vertical_painting_url = avatar['role_vertical_painting_url']
     rank = avatar['rank']
 
-    properties = {p['property_name']: p['final'] for p in avatar['properties']}
+    properties = avatar['properties']
     
     weapon = avatar['weapon']
     
@@ -437,6 +439,27 @@ async def get_avatar_info_png(user_id,num):
 
     if not suit_effects_html:
         suit_effects_html = "<p>未激活任何套装效果</p>"
+
+    stats_list = ""
+    for i in properties:
+        stats_list += f"""<div class="stat-item">
+        <span class="stat-name">{i["property_name"]}</span>
+        <span class="stat-value">{i["final"]}</span>
+        </div>"""
+
+    rank_html = ""
+    for avatar_rank in ranks:
+        desc = str(avatar_rank['desc']).replace("\\n","\n")
+        rank_html += f"""
+            <div class="rank-item">
+            <div class="rank-icon {'unlocked' if avatar_rank['is_unlocked'] else 'locked'}">{avatar_rank['pos']}</div>
+            <div class="rank-content">
+                <div class="rank-name {'unlocked-name' if avatar_rank['is_unlocked'] else 'locked-name'}">{avatar_rank['name']} {'(已解锁)' if avatar_rank['is_unlocked'] else '(未解锁)'}</div>
+                <div class="rank-desc {'unlocked-desc' if avatar_rank['is_unlocked'] else 'locked-desc'}">{desc}</div>
+            </div>
+            </div>
+        """
+
 
     html_content = f"""
     <!DOCTYPE html>
@@ -862,42 +885,7 @@ async def get_avatar_info_png(user_id,num):
                 
                 <div class="stats-box">
                     <h2 class="stats-title">角色属性</h2>
-                    <div class="stat-item">
-                        <span class="stat-name">生命值</span>
-                        <span class="stat-value">{properties.get('生命值', 'N/A')}</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-name">攻击力</span>
-                        <span class="stat-value">{properties.get('攻击力', 'N/A')}</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-name">防御力</span>
-                        <span class="stat-value">{properties.get('防御力', 'N/A')}</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-name">暴击率</span>
-                        <span class="stat-value">{properties.get('暴击率', 'N/A')}</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-name">暴击伤害</span>
-                        <span class="stat-value">{properties.get('暴击伤害', 'N/A')}</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-name">{element_type}伤害加成</span>
-                        <span class="stat-value">{properties.get(element_type + '伤害加成', 'N/A')}</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-name">异常掌控</span>
-                        <span class="stat-value">{properties.get('异常掌控', 'N/A')}</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-name">异常精通</span>
-                        <span class="stat-value">{properties.get('异常精通', 'N/A')}</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-name">穿透值</span>
-                        <span class="stat-value">{properties.get('穿透值', 'N/A')}</span>
-                    </div>
+                    {stats_list}
                 </div>
                 
                 <div class="skills-box">
@@ -959,15 +947,7 @@ async def get_avatar_info_png(user_id,num):
                 
                 <div class="card">
                     <h2 class="card-title"><i>✨</i>命之座</h2>
-                    {''.join([f'''
-                    <div class="rank-item">
-                        <div class="rank-icon {'unlocked' if rank['is_unlocked'] else 'locked'}">{rank['pos']}</div>
-                        <div class="rank-content">
-                            <div class="rank-name {'unlocked-name' if rank['is_unlocked'] else 'locked-name'}">{rank['name']} {'(已解锁)' if rank['is_unlocked'] else '(未解锁)'}</div>
-                            <div class="rank-desc {'unlocked-desc' if rank['is_unlocked'] else 'locked-desc'}">{rank['desc']}</div>
-                        </div>
-                    </div>
-                    ''' for rank in ranks])}
+                    {rank_html}
                 </div>
             </div>
             
@@ -984,6 +964,7 @@ async def get_avatar_info_png(user_id,num):
         )
         context = await browser.new_context(
             bypass_csp=True,
+            device_scale_factor=2
         )
         page = await context.new_page()
         await page.set_content(html_content)
